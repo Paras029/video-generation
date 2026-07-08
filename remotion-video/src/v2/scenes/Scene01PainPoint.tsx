@@ -65,7 +65,7 @@ export const Scene01PainPoint: React.FC = () => {
       >
         <div style={{ maxWidth: 1700, textAlign: "center" }}>
           <TypedText
-            text="Due to disconnect between modeling teams and MRMG on requirements and challenges raised by MRMG during validation,"
+            text="Due to disconnect between various teams on expectations for model validation and requirements for challenges raised,"
             startFrame={5}
             perWord={7}
             style={{ fontSize: 38, fontWeight: 700, color: "#FFFFFF", lineHeight: 1.4 }}

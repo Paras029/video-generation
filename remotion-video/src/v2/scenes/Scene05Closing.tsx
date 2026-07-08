@@ -15,7 +15,7 @@ export const Scene05Closing: React.FC = () => {
         />
         <br />
         <TypedText
-          text="A faster, smarter path from build to validated model."
+          text="A faster, smarter path for model validations."
           startFrame={50}
           perWord={8}
           style={{ fontSize: 48, fontWeight: 700, color: "rgba(255,255,255,0.75)", lineHeight: 1.4, fontFamily: fonts.display }}

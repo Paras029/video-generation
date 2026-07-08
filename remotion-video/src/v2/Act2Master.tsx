@@ -1,4 +1,4 @@
-import { AbsoluteFill, Sequence } from "remotion";
+import { AbsoluteFill, Audio, Sequence, staticFile } from "remotion";
 import { V2 } from "./theme-v2";
 import { Scene01PainPoint } from "./scenes/Scene01PainPoint";
 import { Scene02VaaSIntro } from "./scenes/Scene02VaaSIntro";
@@ -10,7 +10,7 @@ import { Scene05Closing } from "./scenes/Scene05Closing";
 
 export const Act2Master: React.FC = () => (
   <AbsoluteFill>
-    {/* Voiceover track goes here once recorded - see remotion-video/README.md */}
+    <Audio src={staticFile("audio/voiceover.mp3")} />
     <Sequence from={V2.scene1Start} durationInFrames={V2.scene1Dur}>
       <Scene01PainPoint />
     </Sequence>
