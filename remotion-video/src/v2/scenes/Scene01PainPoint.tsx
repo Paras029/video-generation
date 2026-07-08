@@ -1,5 +1,5 @@
 import { AbsoluteFill, interpolate, useCurrentFrame } from "remotion";
-import { v2Colors } from "../theme-v2";
+import { v2Colors, fonts } from "../theme-v2";
 import { TypedText } from "../components/TypedText";
 
 const NodeBox: React.FC<{ label: string; sub: string }> = ({ label, sub }) => (
@@ -12,8 +12,8 @@ const NodeBox: React.FC<{ label: string; sub: string }> = ({ label, sub }) => (
       minWidth: 340,
     }}
   >
-    <div style={{ fontSize: 30, fontWeight: 700, color: "#FFFFFF" }}>{label}</div>
-    <div style={{ fontSize: 20, color: "rgba(255,255,255,0.55)", marginTop: 6 }}>{sub}</div>
+    <div style={{ fontSize: 28, fontWeight: 700, color: "#FFFFFF", fontFamily: fonts.display }}>{label}</div>
+    <div style={{ fontSize: 18, color: "rgba(255,255,255,0.55)", marginTop: 6, fontFamily: fonts.body }}>{sub}</div>
   </div>
 );
 
@@ -59,23 +59,24 @@ export const Scene01PainPoint: React.FC = () => {
         style={{
           alignItems: "center",
           justifyContent: "flex-end",
-          paddingBottom: 140,
-          fontFamily: "system-ui, sans-serif",
+          paddingBottom: 150,
+          fontFamily: fonts.display,
         }}
       >
         <div style={{ maxWidth: 1400, textAlign: "center" }}>
           <TypedText
-            text="Model validation today means months of back-and-forth"
+            text="Model validation often takes longer than expected."
             startFrame={5}
             perWord={8}
-            style={{ fontSize: 46, fontWeight: 600, color: "#FFFFFF", lineHeight: 1.4 }}
+            style={{ fontSize: 48, fontWeight: 700, color: "#FFFFFF", lineHeight: 1.4 }}
           />
-          <br />
+        </div>
+        <div style={{ maxWidth: 1100, textAlign: "center", marginTop: 22, fontFamily: fonts.body }}>
           <TypedText
-            text="before a single model ever reaches production."
-            startFrame={70}
-            perWord={8}
-            style={{ fontSize: 46, fontWeight: 600, color: "rgba(255,255,255,0.7)", lineHeight: 1.4 }}
+            text="A disconnect between modeling teams and MRMG on requirements is usually why."
+            startFrame={65}
+            perWord={7}
+            style={{ fontSize: 26, fontWeight: 500, color: "rgba(255,255,255,0.6)", lineHeight: 1.5 }}
           />
         </div>
       </AbsoluteFill>

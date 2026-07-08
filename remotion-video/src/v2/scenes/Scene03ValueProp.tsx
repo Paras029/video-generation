@@ -1,11 +1,11 @@
 import { AbsoluteFill } from "remotion";
-import { v2Colors } from "../theme-v2";
+import { v2Colors, fonts } from "../theme-v2";
 import { SlidePopIn } from "../components/PopIn";
 
 const benefits = [
   "Higher-quality submissions",
   "Fewer rejected reviews",
-  "Materially shorter time-to-market",
+  "Shorter validation timelines",
 ];
 
 const Row: React.FC<{ text: string; startFrame: number }> = ({ text, startFrame }) => (
@@ -28,7 +28,7 @@ const Row: React.FC<{ text: string; startFrame: number }> = ({ text, startFrame 
       >
         ✓
       </div>
-      <div style={{ fontSize: 46, fontWeight: 600, color: v2Colors.ink }}>{text}</div>
+      <div style={{ fontSize: 44, fontWeight: 700, color: v2Colors.ink, fontFamily: fonts.display }}>{text}</div>
     </div>
   </SlidePopIn>
 );
@@ -42,7 +42,7 @@ export const Scene03ValueProp: React.FC = () => {
         ))}
       </div>
       <SlidePopIn startFrame={90} fromY={20} style={{ marginTop: 40 }}>
-        <div style={{ fontSize: 28, color: v2Colors.mutedInk, fontStyle: "italic" }}>
+        <div style={{ fontSize: 26, color: v2Colors.mutedInk, fontStyle: "italic", fontFamily: fonts.body }}>
           MRMG's independent oversight stays fully intact.
         </div>
       </SlidePopIn>

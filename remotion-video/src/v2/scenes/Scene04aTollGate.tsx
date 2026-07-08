@@ -2,9 +2,8 @@ import { CapabilityScene } from "../components/CapabilityScene";
 
 export const Scene04aTollGate: React.FC = () => (
   <CapabilityScene
-    eyebrow="Capability 1"
     headline="Toll Gate Assist"
-    subtext="Reviews documentation completeness instantly — before it ever reaches MRMG."
+    subtext="A comprehensive completeness and quality review of the model documentation, with clear guidance on what to improve."
     screenshot="screenshots/tollgate.png"
   />
 );

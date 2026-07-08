@@ -2,9 +2,8 @@ import { CapabilityScene } from "../components/CapabilityScene";
 
 export const Scene04bNFM: React.FC = () => (
   <CapabilityScene
-    eyebrow="Capability 2"
     headline="Need For Model"
-    subtext="Validates whether a model is even the right solution — or a simpler alternative would do."
+    subtext="Weighs three criteria: the model team's own performance, a rule-based challenger, and the business benefit versus the cost of maintaining it."
     screenshot="screenshots/nfm.png"
   />
 );

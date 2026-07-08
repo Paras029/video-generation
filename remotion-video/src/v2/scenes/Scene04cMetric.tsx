@@ -2,9 +2,8 @@ import { CapabilityScene } from "../components/CapabilityScene";
 
 export const Scene04cMetric: React.FC = () => (
   <CapabilityScene
-    eyebrow="Capability 3"
     headline="METRIC"
-    subtext="Rigorous, automated testing — for structured and GenAI models alike."
+    subtext="Automated testing across data and performance dimensions for structured and GenAI models, surfacing every alert at the test level, before MRMG opens the file."
     screenshot="screenshots/metric.png"
   />
 );
