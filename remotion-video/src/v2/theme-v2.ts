@@ -27,14 +27,14 @@ export const V2 = {
   width: 1920,
   height: 1080,
   fps: 30,
-  totalFrames: 1520, // ~50.7s - re-time once the recorded voiceover arrives
+  totalFrames: 1790, // ~59.7s - re-time remaining scenes once their VO clips arrive
 
-  scene1Start: 0, scene1Dur: 180, // problem (6s)
-  scene2Start: 180, scene2Dur: 330, // VaaS intro + three capabilities (11s)
-  scene4aStart: 510, scene4aDur: 180, // Toll Gate Assist
-  scene4bStart: 690, scene4bDur: 190, // Need For Model
-  scene4cStart: 880, scene4cDur: 190, // METRIC
-  scene3Start: 1070, scene3Dur: 210, // benefits recap (7s)
-  scene5Start: 1280, scene5Dur: 240, // closing (8s)
-  // Sum: 180+330+180+190+190+210+240 = 1520 ✓
+  scene1Start: 0, scene1Dur: 450, // problem (15s) - timed to the scene 1 VO script
+  scene2Start: 450, scene2Dur: 330, // VaaS intro + three capabilities (11s)
+  scene4aStart: 780, scene4aDur: 180, // Toll Gate Assist
+  scene4bStart: 960, scene4bDur: 190, // Need For Model
+  scene4cStart: 1150, scene4cDur: 190, // METRIC
+  scene3Start: 1340, scene3Dur: 210, // benefits recap (7s)
+  scene5Start: 1550, scene5Dur: 240, // closing (8s)
+  // Sum: 450+330+180+190+190+210+240 = 1790 ✓
 } as const;

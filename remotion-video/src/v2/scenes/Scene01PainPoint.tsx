@@ -63,19 +63,19 @@ export const Scene01PainPoint: React.FC = () => {
           fontFamily: fonts.display,
         }}
       >
-        <div style={{ maxWidth: 1400, textAlign: "center" }}>
+        <div style={{ maxWidth: 1700, textAlign: "center" }}>
           <TypedText
-            text="Model validation often takes longer than expected."
+            text="Due to disconnect between modeling teams and MRMG on requirements and challenges raised by MRMG during validation,"
             startFrame={5}
-            perWord={8}
-            style={{ fontSize: 48, fontWeight: 700, color: "#FFFFFF", lineHeight: 1.4 }}
+            perWord={7}
+            style={{ fontSize: 38, fontWeight: 700, color: "#FFFFFF", lineHeight: 1.4 }}
           />
         </div>
-        <div style={{ maxWidth: 1100, textAlign: "center", marginTop: 22, fontFamily: fonts.body }}>
+        <div style={{ maxWidth: 1500, textAlign: "center", marginTop: 20, fontFamily: fonts.body }}>
           <TypedText
-            text="A disconnect between modeling teams and MRMG on requirements is usually why."
-            startFrame={65}
-            perWord={7}
+            text="model validation journey often takes more time than anticipated, leading to delayed time-to-market for critical solutions."
+            startFrame={95}
+            perWord={6}
             style={{ fontSize: 26, fontWeight: 500, color: "rgba(255,255,255,0.6)", lineHeight: 1.5 }}
           />
         </div>
