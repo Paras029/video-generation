@@ -10,9 +10,18 @@ Open this repo with Claude Code and ask for something like *"let's make a 30-sec
 
 ## Prerequisites
 
-- Node.js 18+ (present)
-- Python 3 (present)
-- Python `librosa` for beat detection — not yet installed; the skill will prompt to install it (`pip install --break-system-packages librosa numpy soundfile`) the first time it's needed
-- `ffmpeg`/`ffprobe` — optional, for verifying render output specs
+- Node.js 22, Python 3.11 — present
+- Python `librosa` (+ numpy, soundfile) for beat detection — installed
+- `ffmpeg`/`ffprobe` system binary — not present; not required, Remotion bundles its own ffmpeg for rendering
 
-Remotion itself isn't scaffolded yet; the skill scaffolds a minimal Remotion project on first use (see `.claude/skills/saas-product-demo-video/references/project-scaffold.md`).
+## Remotion project
+
+A minimal Remotion 4.x project is scaffolded at `remotion-video/` per `.claude/skills/saas-product-demo-video/references/project-scaffold.md` — `package.json`, `tsconfig.json`, `remotion.config.ts`, and a `Placeholder` composition, verified with `npm run typecheck` and a full render.
+
+Google Fonts are **not** wired up via `@remotion/google-fonts` yet — this sandbox's headless Chromium doesn't trust the outbound proxy's CA for direct `fonts.gstatic.com` fetches (confirmed via `curl`, which works fine — it's a browser-side trust gap, not a network block). Once the brand font stack is picked during asset intake, self-host the chosen weights under `remotion-video/public/fonts/` and load them via local `@font-face` instead of the CDN loader.
+
+```bash
+cd remotion-video
+npm run dev     # Remotion Studio at localhost:3030
+npm run build   # remotion render
+```
