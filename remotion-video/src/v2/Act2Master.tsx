@@ -1,36 +1,51 @@
-import { AbsoluteFill, Sequence } from "remotion";
-import { V2 } from "./theme-v2";
-import { Scene01PainPoint } from "./scenes/Scene01PainPoint";
-import { Scene02VaaSIntro } from "./scenes/Scene02VaaSIntro";
-import { Scene03ValueProp } from "./scenes/Scene03ValueProp";
-import { Scene04aTollGate } from "./scenes/Scene04aTollGate";
-import { Scene04bNFM } from "./scenes/Scene04bNFM";
-import { Scene04cMetric } from "./scenes/Scene04cMetric";
-import { Scene05Closing } from "./scenes/Scene05Closing";
+import { AbsoluteFill } from "remotion";
+import { TransitionSeries, linearTiming } from "@remotion/transitions";
+import { fade } from "@remotion/transitions/fade";
+import { TIMINGS, TRANSITION_DUR } from "./timings";
+import { Scene01Problem } from "./scenes/Scene01Problem";
+import { Scene02Intro } from "./scenes/Scene02Intro";
+import { Scene03TollGate } from "./scenes/Scene03TollGate";
+import { Scene04NFM } from "./scenes/Scene04NFM";
+import { Scene05Metric } from "./scenes/Scene05Metric";
+import { Scene06BenefitsClose } from "./scenes/Scene06BenefitsClose";
+
+const transition = () => (
+  <TransitionSeries.Transition presentation={fade()} timing={linearTiming({ durationInFrames: TRANSITION_DUR })} />
+);
 
 export const Act2Master: React.FC = () => (
   <AbsoluteFill>
-    {/* Voiceover track goes here once recorded - see remotion-video/README.md */}
-    <Sequence from={V2.scene1Start} durationInFrames={V2.scene1Dur}>
-      <Scene01PainPoint />
-    </Sequence>
-    <Sequence from={V2.scene2Start} durationInFrames={V2.scene2Dur}>
-      <Scene02VaaSIntro />
-    </Sequence>
-    <Sequence from={V2.scene3Start} durationInFrames={V2.scene3Dur}>
-      <Scene03ValueProp />
-    </Sequence>
-    <Sequence from={V2.scene4aStart} durationInFrames={V2.scene4aDur}>
-      <Scene04aTollGate />
-    </Sequence>
-    <Sequence from={V2.scene4bStart} durationInFrames={V2.scene4bDur}>
-      <Scene04bNFM />
-    </Sequence>
-    <Sequence from={V2.scene4cStart} durationInFrames={V2.scene4cDur}>
-      <Scene04cMetric />
-    </Sequence>
-    <Sequence from={V2.scene5Start} durationInFrames={V2.scene5Dur}>
-      <Scene05Closing />
-    </Sequence>
+    {/*
+      Single narration track goes here once the recorded voiceover is
+      handed off - e.g.:
+      <Audio src={staticFile("voiceover.mp3")} />
+      Re-time each TIMINGS.SCENE*_DUR value in ./timings.ts to match that
+      file's actual per-scene duration; nothing else needs to change.
+    */}
+    <TransitionSeries>
+      <TransitionSeries.Sequence durationInFrames={TIMINGS.SCENE1_PROBLEM_DUR}>
+        <Scene01Problem />
+      </TransitionSeries.Sequence>
+      {transition()}
+      <TransitionSeries.Sequence durationInFrames={TIMINGS.SCENE2_INTRO_DUR}>
+        <Scene02Intro />
+      </TransitionSeries.Sequence>
+      {transition()}
+      <TransitionSeries.Sequence durationInFrames={TIMINGS.SCENE3_TOLLGATE_DUR}>
+        <Scene03TollGate />
+      </TransitionSeries.Sequence>
+      {transition()}
+      <TransitionSeries.Sequence durationInFrames={TIMINGS.SCENE4_NFM_DUR}>
+        <Scene04NFM />
+      </TransitionSeries.Sequence>
+      {transition()}
+      <TransitionSeries.Sequence durationInFrames={TIMINGS.SCENE5_METRIC_DUR}>
+        <Scene05Metric />
+      </TransitionSeries.Sequence>
+      {transition()}
+      <TransitionSeries.Sequence durationInFrames={TIMINGS.SCENE6_CLOSE_DUR}>
+        <Scene06BenefitsClose />
+      </TransitionSeries.Sequence>
+    </TransitionSeries>
   </AbsoluteFill>
 );
