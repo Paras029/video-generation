@@ -15,10 +15,12 @@ punctuation alone for the longer pauses between scenes.
   duration in `timings.ts` from that clip's real length instead of hunting for
   timestamps inside one long recording - much faster to re-time correctly.
 
-Word counts below assume ~150 words/minute (2.5 words/sec). Scene 1's
-duration is now locked to its VO estimate (15s); scenes 2 through 7 are still
-placeholders and **will be re-timed to match your actual clips** once you
-send them - don't worry about hitting their current frame counts exactly.
+Every scene below is timed to its own word count at ~150 words/minute
+(2.5 words/sec) plus its break-tag pauses - the video's `theme-v2.ts` durations
+match these figures exactly, not a uniform placeholder. Once you send the
+actual clips, I'll true up each scene to that clip's real length (should be
+close to these estimates, but ElevenLabs' actual pacing/breaths will differ
+slightly from the math below).
 
 ---
 
@@ -43,7 +45,7 @@ API):
 Due to disconnect between modeling teams and MRMG on requirements and challenges raised by MRMG during validation, <break time="0.3s" /> model validation journey often takes more time than anticipated, leading to delayed time-to-market for critical solutions.
 ```
 
-## Scene 2 - Introducing VaaS (~11s placeholder / est. 26-28s, 63 words)
+## Scene 2 - Introducing VaaS (timed to this VO: 27.0s / 810 frames, 63 words)
 
 ```
 To solve for this, MRMG introduced VaaS: Validation as a Service.
@@ -59,7 +61,7 @@ Need For Model asks whether a model is even the right call.
 And METRIC runs quantitative tests across data and performance.
 ```
 
-## Scene 3 - Toll Gate Assist (~6s placeholder / est. 11s, 27 words)
+## Scene 3 - Toll Gate Assist (timed to this VO: 9.2s / 275 frames, 22 words)
 
 ```
 Toll Gate Assist runs a comprehensive completeness and quality review of the model documentation
@@ -67,7 +69,7 @@ Toll Gate Assist runs a comprehensive completeness and quality review of the mod
 and shows exactly what to improve, before submission.
 ```
 
-## Scene 4 - Need For Model (~6.3s placeholder / est. 17-18s, 44 words)
+## Scene 4 - Need For Model (timed to this VO: 17.3s / 520 frames, 42 words)
 
 ```
 Need For Model asks a more fundamental question: is a model even necessary here?
@@ -75,7 +77,7 @@ Need For Model asks a more fundamental question: is a model even necessary here?
 It weighs three criteria: the modeling team's own performance, how a rule-based alternative compares, and whether the business benefit justifies the cost of building and maintaining a model.
 ```
 
-## Scene 5 - METRIC (~6.3s placeholder / est. 20-22s, 52 words)
+## Scene 5 - METRIC (timed to this VO: 22.2s / 665 frames, 53 words)
 
 ```
 METRIC is an automated testing capability for both structured and GenAI models.
@@ -85,7 +87,7 @@ It runs a comprehensive test suite across data and performance dimensions, and s
 So instead of waiting weeks to hear what MRMG found, model owners see the weak spots upfront - actionable insight before submission.
 ```
 
-## Scene 6 - Benefits recap (~7s placeholder / est. 11-12s, 27 words)
+## Scene 6 - Benefits recap (timed to this VO: 9.5s / 285 frames, 21 words)
 
 ```
 Together, these capabilities mean higher-quality submissions,
@@ -97,7 +99,7 @@ and shorter validation timelines.
 All while MRMG's independent oversight stays fully intact.
 ```
 
-## Scene 7 - Closing (~8s placeholder / est. 9-10s, 19 words)
+## Scene 7 - Closing (timed to this VO: 8.3s / 250 frames, 18 words)
 
 ```
 One platform. Two lines of defense.
@@ -109,8 +111,6 @@ This is VaaS.
 
 ---
 
-**Total estimate at this pace: ~105-115s** (current cut is 59.7s, with scene 1
-now locked to its 15s VO estimate) - the added capability detail in scenes 2,
-4, and 5 is naturally longer spoken than it reads as on-screen captions. Once
-you send the remaining six clips, I'll set the rest of `V2`'s scene durations
-to each one's actual length and re-render.
+**Total: 108.5s** (3255 frames @ 30fps) - every scene above is sized to its own
+VO estimate, not a uniform shift. Once you send the seven clips, I'll true up
+each scene's exact duration to its clip's real length and re-render.

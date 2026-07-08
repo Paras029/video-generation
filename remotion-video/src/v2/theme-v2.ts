@@ -27,14 +27,18 @@ export const V2 = {
   width: 1920,
   height: 1080,
   fps: 30,
-  totalFrames: 1790, // ~59.7s - re-time remaining scenes once their VO clips arrive
+  totalFrames: 3255, // ~108.5s - each scene sized to its own VO script estimate below
 
-  scene1Start: 0, scene1Dur: 450, // problem (15s) - timed to the scene 1 VO script
-  scene2Start: 450, scene2Dur: 330, // VaaS intro + three capabilities (11s)
-  scene4aStart: 780, scene4aDur: 180, // Toll Gate Assist
-  scene4bStart: 960, scene4bDur: 190, // Need For Model
-  scene4cStart: 1150, scene4cDur: 190, // METRIC
-  scene3Start: 1340, scene3Dur: 210, // benefits recap (7s)
-  scene5Start: 1550, scene5Dur: 240, // closing (8s)
-  // Sum: 450+330+180+190+190+210+240 = 1790 ✓
+  // Every duration below is derived from the voiceover-script.md word count
+  // for that scene (150 wpm) plus its break-tag pauses, not a placeholder
+  // guess. Re-time to the exact figure once the real clip exists for that
+  // scene - see the comment on each line for the word-count math.
+  scene1Start: 0, scene1Dur: 450, // problem: 33 words -> 13.2s speaking + lead/lead-out = 15s
+  scene2Start: 450, scene2Dur: 810, // VaaS intro: 63 words + 1.8s breaks = 27.0s
+  scene4aStart: 1260, scene4aDur: 275, // Toll Gate Assist: 22 words + 0.3s breaks = 9.1s
+  scene4bStart: 1535, scene4bDur: 520, // Need For Model: 42 words + 0.5s breaks = 17.3s
+  scene4cStart: 2055, scene4cDur: 665, // METRIC: 53 words + 0.9s breaks = 22.1s
+  scene3Start: 2720, scene3Dur: 285, // benefits recap: 21 words + 1.1s breaks = 9.5s
+  scene5Start: 3005, scene5Dur: 250, // closing: 18 words + 1.1s breaks = 8.3s
+  // Sum: 450+810+275+520+665+285+250 = 3255 ✓
 } as const;
