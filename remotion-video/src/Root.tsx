@@ -9,6 +9,8 @@ import { Scene04aTollGate } from "./v2/scenes/Scene04aTollGate";
 import { Scene04bNFM } from "./v2/scenes/Scene04bNFM";
 import { Scene04cMetric } from "./v2/scenes/Scene04cMetric";
 import { Scene05Closing } from "./v2/scenes/Scene05Closing";
+import { Scene06GetStarted } from "./v2/scenes/Scene06GetStarted";
+import { Scene07Rationale } from "./v2/scenes/Scene07Rationale";
 
 // Self-hosted fonts (see loadLocalFont.ts for why - the sandbox's headless
 // Chromium doesn't trust the outbound proxy's CA for direct
@@ -85,6 +87,22 @@ export const RemotionRoot: React.FC = () => (
       id="v2-Scene05-Closing"
       component={Scene05Closing}
       durationInFrames={V2.scene5Dur}
+      fps={V2.fps}
+      width={V2.width}
+      height={V2.height}
+    />
+    <Composition
+      id="v2-Scene06-GetStarted"
+      component={Scene06GetStarted}
+      durationInFrames={V2.scene6Dur}
+      fps={V2.fps}
+      width={V2.width}
+      height={V2.height}
+    />
+    <Composition
+      id="v2-Scene07-Rationale"
+      component={Scene07Rationale}
+      durationInFrames={V2.scene7Dur}
       fps={V2.fps}
       width={V2.width}
       height={V2.height}

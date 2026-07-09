@@ -2,7 +2,9 @@ import { AbsoluteFill, Audio, Sequence, staticFile } from "remotion";
 import { V2 } from "./theme-v2";
 import { Scene01PainPoint } from "./scenes/Scene01PainPoint";
 import { Scene02VaaSIntro } from "./scenes/Scene02VaaSIntro";
+import { Scene06GetStarted } from "./scenes/Scene06GetStarted";
 import { Scene04aTollGate } from "./scenes/Scene04aTollGate";
+import { Scene07Rationale } from "./scenes/Scene07Rationale";
 import { Scene04bNFM } from "./scenes/Scene04bNFM";
 import { Scene04cMetric } from "./scenes/Scene04cMetric";
 import { Scene03ValueProp } from "./scenes/Scene03ValueProp";
@@ -17,8 +19,14 @@ export const Act2Master: React.FC = () => (
     <Sequence from={V2.scene2Start} durationInFrames={V2.scene2Dur}>
       <Scene02VaaSIntro />
     </Sequence>
+    <Sequence from={V2.scene6Start} durationInFrames={V2.scene6Dur}>
+      <Scene06GetStarted />
+    </Sequence>
     <Sequence from={V2.scene4aStart} durationInFrames={V2.scene4aDur}>
       <Scene04aTollGate />
+    </Sequence>
+    <Sequence from={V2.scene7Start} durationInFrames={V2.scene7Dur}>
+      <Scene07Rationale />
     </Sequence>
     <Sequence from={V2.scene4bStart} durationInFrames={V2.scene4bDur}>
       <Scene04bNFM />
