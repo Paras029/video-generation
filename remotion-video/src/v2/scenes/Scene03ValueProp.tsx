@@ -1,5 +1,5 @@
 import { AbsoluteFill } from "remotion";
-import { v2Colors, fonts } from "../theme-v2";
+import { v2Colors, fonts, gradients } from "../theme-v2";
 import { SlidePopIn } from "../components/PopIn";
 
 const benefits = [
@@ -35,7 +35,7 @@ const Row: React.FC<{ text: string; startFrame: number }> = ({ text, startFrame 
 
 export const Scene03ValueProp: React.FC = () => {
   return (
-    <AbsoluteFill style={{ backgroundColor: v2Colors.bg, alignItems: "center", justifyContent: "center" }}>
+    <AbsoluteFill style={{ background: gradients.bg, alignItems: "center", justifyContent: "center" }}>
       <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
         {benefits.map((b, i) => (
           <Row key={b} text={b} startFrame={i * 22} />

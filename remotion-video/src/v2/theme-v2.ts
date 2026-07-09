@@ -20,6 +20,16 @@ export const fonts = {
   display: "'Plus Jakarta Sans', system-ui, sans-serif",
 } as const;
 
+// Subtle background treatments - replace flat fills so scenes read as a
+// graded video frame rather than a slide background. Kept low-contrast on
+// purpose: these should be felt, not noticed.
+export const gradients = {
+  // Dark navy scenes (problem, closing): soft glow from upper-center.
+  navy: `radial-gradient(ellipse 1400px 900px at 50% -10%, #0A2A7A 0%, ${v2Colors.navy} 55%, #000F42 100%)`,
+  // Light in-product scenes: gentle top-to-bottom cool fade.
+  bg: `linear-gradient(180deg, #F8FAFD 0%, ${v2Colors.bg} 45%, #EBEFF7 100%)`,
+} as const;
+
 // Scene order: Problem -> VaaS intro (three capabilities) -> Get Started
 // (landing page) -> Toll Gate Assist -> Toll Gate rationale detail -> Need
 // For Model -> METRIC -> benefits recap -> closing.

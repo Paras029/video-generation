@@ -1,5 +1,5 @@
 import { AbsoluteFill, Img, staticFile } from "remotion";
-import { v2Colors, fonts } from "../theme-v2";
+import { v2Colors, fonts, gradients } from "../theme-v2";
 import { PopIn, SlidePopIn } from "../components/PopIn";
 import { TypedText } from "../components/TypedText";
 
@@ -38,9 +38,9 @@ const CapabilityChip: React.FC<{ name: string; detail: string; startFrame: numbe
 
 export const Scene02VaaSIntro: React.FC = () => {
   return (
-    <AbsoluteFill style={{ backgroundColor: v2Colors.bg, alignItems: "center", justifyContent: "center" }}>
+    <AbsoluteFill style={{ background: gradients.bg, alignItems: "center", justifyContent: "center" }}>
       <PopIn startFrame={0} style={{ marginBottom: 24 }}>
-        <Img src={staticFile("screenshots/amex-logo.png")} style={{ height: 56 }} />
+        <Img src={staticFile("screenshots/amex-logo.png")} style={{ height: 56, borderRadius: 8 }} />
       </PopIn>
 
       <PopIn startFrame={8} config={{ damping: 14 }}>

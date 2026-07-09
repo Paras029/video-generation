@@ -1,5 +1,15 @@
-import { AbsoluteFill, Audio, Sequence, staticFile } from "remotion";
+import { AbsoluteFill, Audio, Sequence, interpolate, staticFile } from "remotion";
 import { V2 } from "./theme-v2";
+
+// Background music ducked well under the voiceover, with a soft fade in/out
+// at the very start and end so it never competes with narration.
+const MUSIC_VOLUME = 0.16;
+const musicVolume = (frame: number) =>
+  MUSIC_VOLUME *
+  interpolate(frame, [0, 45, V2.totalFrames - 75, V2.totalFrames], [0, 1, 1, 0], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+  });
 import { Scene01PainPoint } from "./scenes/Scene01PainPoint";
 import { Scene02VaaSIntro } from "./scenes/Scene02VaaSIntro";
 import { Scene06GetStarted } from "./scenes/Scene06GetStarted";
@@ -13,6 +23,7 @@ import { Scene05Closing } from "./scenes/Scene05Closing";
 export const Act2Master: React.FC = () => (
   <AbsoluteFill>
     <Audio src={staticFile("audio/voiceover.mp3")} />
+    <Audio src={staticFile("audio/music.wav")} volume={musicVolume} />
     <Sequence from={V2.scene1Start} durationInFrames={V2.scene1Dur}>
       <Scene01PainPoint />
     </Sequence>

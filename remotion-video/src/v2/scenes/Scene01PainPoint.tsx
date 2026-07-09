@@ -1,65 +1,106 @@
 import { AbsoluteFill, interpolate, useCurrentFrame } from "remotion";
-import { v2Colors, fonts } from "../theme-v2";
+import { v2Colors, fonts, gradients } from "../theme-v2";
 import { TypedText } from "../components/TypedText";
+import { PeopleGroup } from "../components/PersonIcon";
+import { DocumentToken } from "../components/DocumentToken";
+import { easings } from "../../anim/easings";
 
-const NodeBox: React.FC<{ label: string; sub: string }> = ({ label, sub }) => (
-  <div
-    style={{
-      border: `2px solid rgba(255,255,255,0.25)`,
-      borderRadius: 16,
-      padding: "28px 40px",
-      textAlign: "center",
-      minWidth: 340,
-    }}
-  >
-    <div style={{ fontSize: 28, fontWeight: 700, color: "#FFFFFF", fontFamily: fonts.display }}>{label}</div>
-    <div style={{ fontSize: 18, color: "rgba(255,255,255,0.55)", marginTop: 6, fontFamily: fonts.body }}>{sub}</div>
+const OWNER_X = 560;
+const MRMG_X = 1360;
+const DOC_Y = 250;
+const PEOPLE_Y = 380;
+const LABEL_Y = 448;
+const CYCLE = 130;
+const TRAVEL = 55;
+const HOLD = 10;
+
+const GroupLabel: React.FC<{ x: number; label: string; sub: string }> = ({ x, label, sub }) => (
+  <div style={{ position: "absolute", left: x, top: LABEL_Y, transform: "translateX(-50%)", textAlign: "center" }}>
+    <div style={{ fontSize: 26, fontWeight: 700, color: "#FFFFFF", fontFamily: fonts.display, letterSpacing: 1 }}>
+      {label}
+    </div>
+    <div style={{ fontSize: 16, color: "rgba(255,255,255,0.5)", marginTop: 4, fontFamily: fonts.body }}>{sub}</div>
   </div>
 );
 
 export const Scene01PainPoint: React.FC = () => {
   const frame = useCurrentFrame();
-
-  // Back-and-forth arrow oscillating between the two boxes
-  const cycle = 40;
-  const t = (frame % cycle) / cycle;
-  const swing = Math.sin(t * Math.PI * 2);
-  const arrowX = swing * 22;
-  const arrowOpacity = interpolate(frame, [10, 30], [0, 1], {
+  const introOpacity = interpolate(frame, [0, 18], [0, 1], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
   });
 
+  const t = frame % CYCLE;
+  let x: number;
+  let flagged: boolean;
+
+  if (t < TRAVEL) {
+    // outbound: owner -> MRMG
+    const p = interpolate(t, [0, TRAVEL], [0, 1], { easing: easings.slowInLand, extrapolateRight: "clamp" });
+    x = OWNER_X + (MRMG_X - OWNER_X) * p;
+    flagged = false;
+  } else if (t < TRAVEL + HOLD) {
+    x = MRMG_X;
+    flagged = t > TRAVEL + 3;
+  } else if (t < TRAVEL + HOLD + TRAVEL) {
+    // return: MRMG -> owner, flagged with clarifications
+    const p = interpolate(t - (TRAVEL + HOLD), [0, TRAVEL], [0, 1], {
+      easing: easings.slowInLand,
+      extrapolateRight: "clamp",
+    });
+    x = MRMG_X + (OWNER_X - MRMG_X) * p;
+    flagged = true;
+  } else {
+    x = OWNER_X;
+    flagged = t < CYCLE - 4;
+  }
+
+  const flightProgress = (x - OWNER_X) / (MRMG_X - OWNER_X);
+  const arc = Math.sin(Math.max(0, Math.min(1, flightProgress)) * Math.PI) * 46;
+  const docOpacity = interpolate(frame, [0, 12], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+
   return (
-    <AbsoluteFill style={{ backgroundColor: v2Colors.navy }}>
-      <AbsoluteFill
-        style={{
-          alignItems: "center",
-          justifyContent: "center",
-          gap: 90,
-          flexDirection: "row",
-          top: -160,
-        }}
-      >
-        <NodeBox label="MODEL OWNER" sub="1LOD" />
+    <AbsoluteFill style={{ background: gradients.navy }}>
+      <AbsoluteFill style={{ opacity: introOpacity }}>
+        <div style={{ position: "absolute", left: OWNER_X, top: PEOPLE_Y, transform: "translateX(-50%)" }}>
+          <PeopleGroup />
+        </div>
+        <div style={{ position: "absolute", left: MRMG_X, top: PEOPLE_Y, transform: "translateX(-50%)" }}>
+          <PeopleGroup />
+        </div>
+        <GroupLabel x={OWNER_X} label="MODEL OWNER" sub="1LOD" />
+        <GroupLabel x={MRMG_X} label="MRMG" sub="2LOD" />
+
+        {/* Dotted flight path */}
         <div
           style={{
-            fontSize: 44,
-            color: v2Colors.blue,
-            opacity: arrowOpacity,
-            transform: `translateX(${arrowX}px)`,
+            position: "absolute",
+            left: OWNER_X,
+            top: DOC_Y + 90,
+            width: MRMG_X - OWNER_X,
+            height: 0,
+            borderTop: "2px dashed rgba(255,255,255,0.15)",
+          }}
+        />
+
+        <div
+          style={{
+            position: "absolute",
+            left: x,
+            top: DOC_Y - arc,
+            transform: "translate(-50%, -50%)",
+            opacity: docOpacity,
           }}
         >
-          ⇄
+          <DocumentToken flagged={flagged} />
         </div>
-        <NodeBox label="MRMG" sub="2LOD" />
       </AbsoluteFill>
 
       <AbsoluteFill
         style={{
           alignItems: "center",
           justifyContent: "flex-end",
-          paddingBottom: 150,
+          paddingBottom: 130,
           fontFamily: fonts.display,
         }}
       >

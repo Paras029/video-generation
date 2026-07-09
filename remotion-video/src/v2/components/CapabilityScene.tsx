@@ -1,7 +1,8 @@
-import { AbsoluteFill, Img, staticFile } from "remotion";
-import { v2Colors, fonts } from "../theme-v2";
+import { AbsoluteFill, Img, interpolate, staticFile, useCurrentFrame } from "remotion";
+import { v2Colors, fonts, gradients } from "../theme-v2";
 import { SlidePopIn } from "./PopIn";
 import { TypedText } from "./TypedText";
+import { easings } from "../../anim/easings";
 
 export interface CapabilitySceneProps {
   headline: string;
@@ -10,8 +11,17 @@ export interface CapabilitySceneProps {
 }
 
 export const CapabilityScene: React.FC<CapabilitySceneProps> = ({ headline, subtext, screenshot }) => {
+  const frame = useCurrentFrame();
+  // Slow Ken Burns drift on the screenshot - reads as a captured video frame
+  // rather than a static image dropped onto a slide.
+  const zoom = interpolate(frame, [0, 280], [1, 1.035], {
+    easing: easings.soft,
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+  });
+
   return (
-    <AbsoluteFill style={{ backgroundColor: v2Colors.bg }}>
+    <AbsoluteFill style={{ background: gradients.bg }}>
       <AbsoluteFill style={{ padding: "64px 90px", flexDirection: "column", alignItems: "center" }}>
         <div style={{ fontSize: 52, fontWeight: 800, color: v2Colors.navy, fontFamily: fonts.display }}>
           {headline}
@@ -34,7 +44,10 @@ export const CapabilityScene: React.FC<CapabilitySceneProps> = ({ headline, subt
               display: "flex",
             }}
           >
-            <Img src={staticFile(screenshot)} style={{ height: 560, width: "auto", display: "block" }} />
+            <Img
+              src={staticFile(screenshot)}
+              style={{ height: 560, width: "auto", display: "block", transform: `scale(${zoom})` }}
+            />
           </div>
         </SlidePopIn>
       </AbsoluteFill>
