@@ -1,7 +1,7 @@
 import { AbsoluteFill, Img, interpolate, staticFile, useCurrentFrame } from "remotion";
 import { v2Colors, fonts, gradients } from "../theme-v2";
-import { SlidePopIn } from "./PopIn";
-import { TypedText } from "./TypedText";
+import { SlidePopIn, PopIn } from "./PopIn";
+import { RevealText } from "./RevealText";
 import { easings } from "../../anim/easings";
 
 export interface CapabilitySceneProps {
@@ -26,11 +26,14 @@ export const CapabilityScene: React.FC<CapabilitySceneProps> = ({ headline, subt
         <div style={{ fontSize: 52, fontWeight: 800, color: v2Colors.navy, fontFamily: fonts.display }}>
           {headline}
         </div>
-        <div style={{ maxWidth: 1150, marginTop: 12, textAlign: "center" }}>
-          <TypedText
+        <PopIn startFrame={2} config={{ damping: 20 }} style={{ transformOrigin: "center", marginTop: 10 }}>
+          <div style={{ width: 64, height: 5, borderRadius: 3, backgroundColor: v2Colors.blue }} />
+        </PopIn>
+        <div style={{ maxWidth: 1150, marginTop: 18, textAlign: "center" }}>
+          <RevealText
             text={subtext}
-            startFrame={8}
-            perWord={6}
+            startFrame={10}
+            duration={20}
             style={{ fontSize: 27, fontWeight: 500, color: v2Colors.mutedInk, lineHeight: 1.5, fontFamily: fonts.body }}
           />
         </div>

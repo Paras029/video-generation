@@ -1,17 +1,42 @@
 import { AbsoluteFill, Img, staticFile } from "remotion";
 import { v2Colors, fonts, gradients } from "../theme-v2";
 import { PopIn, SlidePopIn } from "../components/PopIn";
-import { TypedText } from "../components/TypedText";
+import { RevealText } from "../components/RevealText";
+
+const icons: Record<string, React.ReactNode> = {
+  gate: (
+    <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
+      <path d="M4 20V6l8-3 8 3v14" stroke="#FFFFFF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M9 20v-6h6v6" stroke="#FFFFFF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M4 11h16" stroke="#FFFFFF" strokeWidth="2" strokeLinecap="round" />
+    </svg>
+  ),
+  question: (
+    <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
+      <circle cx="12" cy="12" r="9" stroke="#FFFFFF" strokeWidth="2" />
+      <path d="M9.5 9.2a2.5 2.5 0 1 1 3.6 2.25c-.75.4-1.1.9-1.1 1.55" stroke="#FFFFFF" strokeWidth="2" strokeLinecap="round" />
+      <circle cx="12" cy="16.6" r="1.05" fill="#FFFFFF" />
+    </svg>
+  ),
+  metric: (
+    <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
+      <path d="M4 20V11" stroke="#FFFFFF" strokeWidth="2" strokeLinecap="round" />
+      <path d="M11 20V4" stroke="#FFFFFF" strokeWidth="2" strokeLinecap="round" />
+      <path d="M18 20v-7" stroke="#FFFFFF" strokeWidth="2" strokeLinecap="round" />
+    </svg>
+  ),
+};
 
 const capabilities = [
-  { name: "Toll Gate Assist", detail: "Documentation completeness and quality" },
-  { name: "Need For Model", detail: "Is a model even the right call?" },
-  { name: "METRIC", detail: "Quantitative testing across data and performance" },
+  { name: "Toll Gate Assist", detail: "Documentation completeness and quality", icon: "gate" },
+  { name: "Need For Model", detail: "Is a model even the right call?", icon: "question" },
+  { name: "METRIC", detail: "Quantitative testing across data and performance", icon: "metric" },
 ];
 
-const CapabilityChip: React.FC<{ name: string; detail: string; startFrame: number }> = ({
+const CapabilityChip: React.FC<{ name: string; detail: string; icon: string; startFrame: number }> = ({
   name,
   detail,
+  icon,
   startFrame,
 }) => (
   <SlidePopIn startFrame={startFrame} fromY={24} style={{ flex: 1 }}>
@@ -26,6 +51,20 @@ const CapabilityChip: React.FC<{ name: string; detail: string; startFrame: numbe
         boxSizing: "border-box",
       }}
     >
+      <div
+        style={{
+          width: 44,
+          height: 44,
+          borderRadius: 10,
+          backgroundColor: v2Colors.navy,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          marginBottom: 14,
+        }}
+      >
+        {icons[icon]}
+      </div>
       <div style={{ fontSize: 21, fontWeight: 700, color: v2Colors.navy, fontFamily: fonts.display }}>
         {name}
       </div>
@@ -62,17 +101,17 @@ export const Scene02VaaSIntro: React.FC = () => {
       </div>
 
       <div style={{ maxWidth: 1200, textAlign: "center", marginTop: 40 }}>
-        <TypedText
+        <RevealText
           text="A shift-left capability that lets model owners self-check submissions before validation, arriving better prepared for MRMG's challenge."
           startFrame={50}
-          perWord={6}
+          duration={22}
           style={{ fontSize: 29, fontWeight: 500, color: v2Colors.ink, lineHeight: 1.5, fontFamily: fonts.body }}
         />
       </div>
 
       <div style={{ display: "flex", gap: 24, marginTop: 48, width: 1400 }}>
         {capabilities.map((c, i) => (
-          <CapabilityChip key={c.name} name={c.name} detail={c.detail} startFrame={150 + i * 12} />
+          <CapabilityChip key={c.name} name={c.name} detail={c.detail} icon={c.icon} startFrame={150 + i * 12} />
         ))}
       </div>
     </AbsoluteFill>

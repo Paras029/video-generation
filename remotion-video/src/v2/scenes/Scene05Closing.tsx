@@ -1,23 +1,24 @@
 import { AbsoluteFill, Img, staticFile } from "remotion";
 import { v2Colors, fonts, gradients } from "../theme-v2";
-import { TypedText } from "../components/TypedText";
+import { RevealText } from "../components/RevealText";
 import { PopIn } from "../components/PopIn";
+import { AmbientGlow } from "../components/AmbientGlow";
 
 export const Scene05Closing: React.FC = () => {
   return (
     <AbsoluteFill style={{ background: gradients.navy, alignItems: "center", justifyContent: "center" }}>
+      <AmbientGlow />
       <div style={{ maxWidth: 1400, textAlign: "center", marginBottom: 50 }}>
-        <TypedText
+        <RevealText
           text="One platform. Two lines of defense."
           startFrame={0}
-          perWord={8}
+          duration={24}
           style={{ fontSize: 48, fontWeight: 700, color: "#FFFFFF", lineHeight: 1.4, fontFamily: fonts.display }}
         />
-        <br />
-        <TypedText
+        <RevealText
           text="A faster, smarter path for model validations."
           startFrame={50}
-          perWord={8}
+          duration={24}
           style={{ fontSize: 48, fontWeight: 700, color: "rgba(255,255,255,0.75)", lineHeight: 1.4, fontFamily: fonts.display }}
         />
       </div>
