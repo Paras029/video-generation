@@ -17,15 +17,15 @@ const ARC = 60; // vertical bulge of each loop leg - kept small so the loop
 // stays contained near the people instead of reaching down toward the label
 const DOC_SCALE = 0.72; // smaller token gives more clearance from the label
 const LABEL_Y = 500;
-const BUBBLE_Y = 90;
+const BUBBLE_Y = 260; // hovers close above the people instead of near the top edge
 
-const CYCLE = 195;
-const TRAVEL = 60;
-const OUT_START = 22; // submission leg starts (top arc, owner -> MRMG)
-const OUT_END = OUT_START + TRAVEL; // 82
-const BACK_START = 122; // feedback leg starts (bottom arc, MRMG -> owner)
-const BACK_END = BACK_START + TRAVEL; // 182
-const HOLD_OWNER_LEN = CYCLE - BACK_END + OUT_START; // 35
+const CYCLE = 260;
+const TRAVEL = 80;
+const OUT_START = 29; // submission leg starts (top arc, owner -> MRMG)
+const OUT_END = OUT_START + TRAVEL; // 109
+const BACK_START = 162; // feedback leg starts (bottom arc, MRMG -> owner)
+const BACK_END = BACK_START + TRAVEL; // 242
+const HOLD_OWNER_LEN = CYCLE - BACK_END + OUT_START; // 47
 
 const triangle = (t: number, start: number, fadeIn: number, hold: number, fadeOut: number) =>
   interpolate(t, [start, start + fadeIn, start + fadeIn + hold, start + fadeIn + hold + fadeOut], [0, 1, 1, 0], {
@@ -90,9 +90,9 @@ export const Scene01PainPoint: React.FC = () => {
     flagged = true;
   }
 
-  const bubble1 = triangle(t, 0, 8, 18, 8); // "Validation artifacts submitted"
-  const bubbleReviewing = triangle(t, 82, 8, 10, 8);
-  const bubbleFeedback = triangle(t, 102, 8, 18, 8);
+  const bubble1 = triangle(t, 0, 11, 24, 11); // "Validation artifacts submitted"
+  const bubbleReviewing = triangle(t, OUT_END, 11, 13, 11);
+  const bubbleFeedback = triangle(t, 136, 11, 24, 11);
 
   return (
     <AbsoluteFill style={{ background: gradients.navy }}>
