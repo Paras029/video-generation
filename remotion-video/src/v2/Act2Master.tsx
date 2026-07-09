@@ -11,11 +11,14 @@ const musicVolume = (frame: number) =>
     extrapolateRight: "clamp",
   });
 
-// Dissolves each scene in/out within its own fixed slot instead of an
-// overlapping crossfade - a real overlap would shift every later scene's
-// start away from the voiceover timestamps they were aligned to. This gets
-// the soft-cut feel with zero drift.
-const CUT_FADE = 12;
+// True crossfade with zero timing drift: each outgoing scene's Sequence is
+// extended CUT_FADE frames past its nominal end (its own start never moves),
+// overlapping the next scene which starts exactly on schedule. The outgoing
+// scene's fade-out window now lines up with the incoming scene's fade-in
+// window instead of sitting right before it, so the two blend into each
+// other rather than both dipping near-black at the same instant (the old
+// "flashy" cut).
+const CUT_FADE = 14;
 const SceneFade: React.FC<{ duration: number; children: React.ReactNode }> = ({ duration, children }) => {
   const frame = useCurrentFrame();
   const opacity = interpolate(
@@ -41,43 +44,43 @@ export const Act2Master: React.FC = () => (
   <AbsoluteFill>
     <Audio src={staticFile("audio/voiceover.mp3")} />
     <Audio src={staticFile("audio/music.wav")} volume={musicVolume} />
-    <Sequence from={V2.scene1Start} durationInFrames={V2.scene1Dur}>
-      <SceneFade duration={V2.scene1Dur}>
+    <Sequence from={V2.scene1Start} durationInFrames={V2.scene1Dur + CUT_FADE}>
+      <SceneFade duration={V2.scene1Dur + CUT_FADE}>
         <Scene01PainPoint />
       </SceneFade>
     </Sequence>
-    <Sequence from={V2.scene2Start} durationInFrames={V2.scene2Dur}>
-      <SceneFade duration={V2.scene2Dur}>
+    <Sequence from={V2.scene2Start} durationInFrames={V2.scene2Dur + CUT_FADE}>
+      <SceneFade duration={V2.scene2Dur + CUT_FADE}>
         <Scene02VaaSIntro />
       </SceneFade>
     </Sequence>
-    <Sequence from={V2.scene6Start} durationInFrames={V2.scene6Dur}>
-      <SceneFade duration={V2.scene6Dur}>
+    <Sequence from={V2.scene6Start} durationInFrames={V2.scene6Dur + CUT_FADE}>
+      <SceneFade duration={V2.scene6Dur + CUT_FADE}>
         <Scene06GetStarted />
       </SceneFade>
     </Sequence>
-    <Sequence from={V2.scene4aStart} durationInFrames={V2.scene4aDur}>
-      <SceneFade duration={V2.scene4aDur}>
+    <Sequence from={V2.scene4aStart} durationInFrames={V2.scene4aDur + CUT_FADE}>
+      <SceneFade duration={V2.scene4aDur + CUT_FADE}>
         <Scene04aTollGate />
       </SceneFade>
     </Sequence>
-    <Sequence from={V2.scene7Start} durationInFrames={V2.scene7Dur}>
-      <SceneFade duration={V2.scene7Dur}>
+    <Sequence from={V2.scene7Start} durationInFrames={V2.scene7Dur + CUT_FADE}>
+      <SceneFade duration={V2.scene7Dur + CUT_FADE}>
         <Scene07Rationale />
       </SceneFade>
     </Sequence>
-    <Sequence from={V2.scene4bStart} durationInFrames={V2.scene4bDur}>
-      <SceneFade duration={V2.scene4bDur}>
+    <Sequence from={V2.scene4bStart} durationInFrames={V2.scene4bDur + CUT_FADE}>
+      <SceneFade duration={V2.scene4bDur + CUT_FADE}>
         <Scene04bNFM />
       </SceneFade>
     </Sequence>
-    <Sequence from={V2.scene4cStart} durationInFrames={V2.scene4cDur}>
-      <SceneFade duration={V2.scene4cDur}>
+    <Sequence from={V2.scene4cStart} durationInFrames={V2.scene4cDur + CUT_FADE}>
+      <SceneFade duration={V2.scene4cDur + CUT_FADE}>
         <Scene04cMetric />
       </SceneFade>
     </Sequence>
-    <Sequence from={V2.scene3Start} durationInFrames={V2.scene3Dur}>
-      <SceneFade duration={V2.scene3Dur}>
+    <Sequence from={V2.scene3Start} durationInFrames={V2.scene3Dur + CUT_FADE}>
+      <SceneFade duration={V2.scene3Dur + CUT_FADE}>
         <Scene03ValueProp />
       </SceneFade>
     </Sequence>

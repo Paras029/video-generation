@@ -9,10 +9,14 @@ import { easings } from "../../anim/easings";
 
 const OWNER_X = 560;
 const MRMG_X = 1360;
-const Y0 = 260; // baseline where the document rests at each side
-const ARC = 95; // vertical offset of each loop leg
-const PEOPLE_Y = 430;
-const LABEL_Y = 498;
+const PEOPLE_Y = 430; // top of the person icons
+const PEOPLE_BOTTOM = PEOPLE_Y + 56; // bottom of the tallest person icon
+const TOP_Y = PEOPLE_Y - 12; // submission leg touches just above the people
+const BOTTOM_Y = PEOPLE_BOTTOM - 14; // feedback leg touches just below the people
+const ARC = 60; // vertical bulge of each loop leg - kept small so the loop
+// stays contained near the people instead of reaching down toward the label
+const DOC_SCALE = 0.72; // smaller token gives more clearance from the label
+const LABEL_Y = 500;
 const BUBBLE_Y = 90;
 
 const CYCLE = 195;
@@ -21,6 +25,7 @@ const OUT_START = 22; // submission leg starts (top arc, owner -> MRMG)
 const OUT_END = OUT_START + TRAVEL; // 82
 const BACK_START = 122; // feedback leg starts (bottom arc, MRMG -> owner)
 const BACK_END = BACK_START + TRAVEL; // 182
+const HOLD_OWNER_LEN = CYCLE - BACK_END + OUT_START; // 35
 
 const triangle = (t: number, start: number, fadeIn: number, hold: number, fadeOut: number) =>
   interpolate(t, [start, start + fadeIn, start + fadeIn + hold, start + fadeIn + hold + fadeOut], [0, 1, 1, 0], {
@@ -37,34 +42,6 @@ const GroupLabel: React.FC<{ x: number; label: string; sub: string }> = ({ x, la
   </div>
 );
 
-// Faint racetrack guide - the top leg is the submission path, the bottom leg
-// is the feedback/rework path, so the loop shape itself reads as the cycle.
-const LoopGuide: React.FC = () => {
-  const midX = (OWNER_X + MRMG_X) / 2;
-  const topPeak = Y0 - ARC * 1.65;
-  const bottomPeak = Y0 + ARC * 1.65;
-  return (
-    <svg width="100%" height="100%" style={{ position: "absolute", left: 0, top: 0, overflow: "visible" }}>
-      <path
-        d={`M ${OWNER_X} ${Y0} Q ${midX} ${topPeak} ${MRMG_X} ${Y0}`}
-        stroke="rgba(255,255,255,0.14)"
-        strokeWidth={2}
-        strokeDasharray="1 10"
-        strokeLinecap="round"
-        fill="none"
-      />
-      <path
-        d={`M ${MRMG_X} ${Y0} Q ${midX} ${bottomPeak} ${OWNER_X} ${Y0}`}
-        stroke="rgba(255,255,255,0.14)"
-        strokeWidth={2}
-        strokeDasharray="1 10"
-        strokeLinecap="round"
-        fill="none"
-      />
-    </svg>
-  );
-};
-
 export const Scene01PainPoint: React.FC = () => {
   const frame = useCurrentFrame();
   const introOpacity = interpolate(frame, [0, 18], [0, 1], {
@@ -75,27 +52,41 @@ export const Scene01PainPoint: React.FC = () => {
 
   const t = frame % CYCLE;
 
+  // The document's path is anchored directly on the people: it leaves and
+  // arrives at the TOP of each group on the outbound (submission) leg, and
+  // at the BOTTOM of each group on the return (feedback) leg, so the loop
+  // visually wraps around the two teams instead of floating above them.
   let x = OWNER_X;
-  let y = Y0;
+  let y = TOP_Y;
   let flagged = false;
 
   if (t >= OUT_START && t < OUT_END) {
-    const p = interpolate(t, [OUT_START, OUT_END], [0, 1], { easing: easings.slowInLand });
+    // symmetric easing keeps the horizontal and vertical motion in sync, so
+    // the bulge always decays back to baseline exactly as the document
+    // reaches its destination x - a front-loaded landing ease would let x
+    // arrive early while the arc is still near its peak, dropping the
+    // document into the label text below.
+    const p = interpolate(t, [OUT_START, OUT_END], [0, 1], { easing: easings.soft });
     x = OWNER_X + (MRMG_X - OWNER_X) * p;
-    y = Y0 - Math.sin(p * Math.PI) * ARC;
-    flagged = false;
+    y = TOP_Y - Math.sin(p * Math.PI) * ARC;
   } else if (t >= OUT_END && t < BACK_START) {
+    // holding at MRMG - drifts from the top anchor down to the bottom
+    // anchor, ready to depart on the return leg
     x = MRMG_X;
-    y = Y0;
-    flagged = false;
+    const p = interpolate(t, [OUT_END, BACK_START], [0, 1], { easing: easings.soft });
+    y = TOP_Y + (BOTTOM_Y - TOP_Y) * p;
   } else if (t >= BACK_START && t < BACK_END) {
-    const p = interpolate(t, [BACK_START, BACK_END], [0, 1], { easing: easings.slowInLand });
+    const p = interpolate(t, [BACK_START, BACK_END], [0, 1], { easing: easings.soft });
     x = MRMG_X + (OWNER_X - MRMG_X) * p;
-    y = Y0 + Math.sin(p * Math.PI) * ARC;
+    y = BOTTOM_Y + Math.sin(p * Math.PI) * ARC;
     flagged = true;
-  } else if (t >= BACK_END) {
+  } else {
+    // holding at Owner - drifts from the bottom anchor back up to the top
+    // anchor, ready for the next submission; wraps across the cycle seam
     x = OWNER_X;
-    y = Y0;
+    const elapsed = t >= BACK_END ? t - BACK_END : t + (CYCLE - BACK_END);
+    const p = interpolate(elapsed, [0, HOLD_OWNER_LEN], [0, 1], { easing: easings.soft });
+    y = BOTTOM_Y - (BOTTOM_Y - TOP_Y) * p;
     flagged = true;
   }
 
@@ -107,8 +98,6 @@ export const Scene01PainPoint: React.FC = () => {
     <AbsoluteFill style={{ background: gradients.navy }}>
       <AmbientGlow />
       <AbsoluteFill style={{ opacity: introOpacity }}>
-        <LoopGuide />
-
         <div style={{ position: "absolute", left: OWNER_X, top: PEOPLE_Y, transform: "translateX(-50%)" }}>
           <PeopleGroup />
         </div>
@@ -137,7 +126,7 @@ export const Scene01PainPoint: React.FC = () => {
             opacity: docOpacity,
           }}
         >
-          <DocumentToken flagged={flagged} />
+          <DocumentToken flagged={flagged} scale={DOC_SCALE} />
         </div>
       </AbsoluteFill>
 
